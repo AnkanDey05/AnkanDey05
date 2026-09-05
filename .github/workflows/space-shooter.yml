@@ -19,3 +19,10 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           output-path: 'game.gif'
           strategy: 'random'
+      - name: Commit generated game
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add game.gif
+          git diff --cached --quiet || git commit -m "chore: update space shooter"
+          git push
