@@ -16,7 +16,7 @@ kernel: c++
 shell: bash
 editor: vs code / neovim / visual studio
 languages: c, c++, javascript, python
-focus: gasmes, systems, graphics, real-time
+focus: games, systems, graphics, real-time
 current: unknown
 uptime: 4y 5m 10d (since 26 mar 2022)
 ```
