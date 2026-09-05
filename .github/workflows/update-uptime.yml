@@ -1,0 +1,36 @@
+name: Update Uptime
+
+on:
+  schedule:
+    - cron: "0 0 * * *"   # once a day, midnight UTC
+  workflow_dispatch:        # lets you trigger it manually from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Recalculate uptime
+        run: python scripts/uptime.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet -- README.md; then
+            git add README.md
+            git commit -m "chore: update uptime"
+            git push
+          else
+            echo "No change, skipping commit."
+          fi
